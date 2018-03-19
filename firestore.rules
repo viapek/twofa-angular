@@ -16,7 +16,8 @@ service cloud.firestore {
     
     match /twofa/{personId} {
       allow read: if false;
-      allow write: if isOwner(personId);
+      allow write: if isOwner(personId) && 
+      								!exists(/databases/$(database)/documents/twofa/$(personId));
     }
   }
 }
