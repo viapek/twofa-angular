@@ -1,0 +1,83 @@
+<div class="screen" *ngIf="!user">
+  <div class="loginDiv">
+    <mat-card>
+      <p class="mat-display-1">Welcome to Project Tracker</p>
+        <mat-form-field>
+          <input matInput type="email" [(ngModel)]="email" placeholder="Enter your email" email required>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput type="password" [(ngModel)]="password" placeholder="Enter your password">
+        </mat-form-field>
+
+        <button mat-button (click)="onSubmit()" color="accent">
+          <i matTooltip="Sign in" class="fa fa-sign-in"></i> Log in
+        </button>
+        <br>
+        <button mat-button (click)="resetPassword()" [disabled]="email==''">
+          Reset you password
+        </button>        
+      <p class="mat-body-2">Only authorised access is permitted to this site.<br>If you were not invited, please leave.</p>
+    </mat-card>
+    <mat-card-footer>{{ statusMessage }}</mat-card-footer>
+  </div>
+</div>
+<div class="screen" *ngIf="user?.twofa && !(verifyingOTP || loggingIn)">
+  <div class="loginDiv">
+    <mat-card>
+      <p class="mat-display-1">One Time Password (OTP)</p>
+        <mat-form-field>
+          <input matInput type="text" [(ngModel)]="otp" placeholder="Enter OTP" required>
+        </mat-form-field>
+
+        <button mat-button (click)="onTwoFA()" color="accent">
+          <i matTooltip="Authenticate" class="fa fa-sign-in"></i> Authenticate
+        </button>
+      <p class="mat-body-2">Only authorised access is permitted to this site.<br>If you were not invited, please leave.</p>
+    </mat-card>
+    <mat-card-footer>{{ statusMessage }}</mat-card-footer>
+  </div>
+</div>
+<div class="screen" *ngIf="user && !user?.twofa">
+  <div class="loginDiv">
+    <mat-card>
+      <p class="mat-display-1">Register 2 Factor Authentication</p>
+      <p class="mat-body-2">To access this application you must register and use 2 factor authentication.</p>
+      <p class="mat-body-2">Go to your app store and install either Microsoft Authenticator or Google Authenticator 
+        and then scan the below barcode</p>
+      <div *ngIf="(new2FA | async) as n2FA" class="qrCodeDiv">
+        <div class="qrCodeSpan"><qrcode [qrdata]="n2FA.otpURL" [size]="150"></qrcode></div>
+        <div class="keySpan">
+          <p>Or you can manually enter this key -</p>
+          <div class="displaySeed">{{ n2FA.secret }}</div>
+          <p>
+            <button mat-button (click)="newSeed()">
+              <i matTooltip="Generate new key" class="fa fa-refresh fa-fw"></i> Generate new key
+            </button>
+          </p>
+        </div>
+      </div>
+      <p>
+        Once you have successfully added this to your authenticator please click 'Register' and 
+        go to the One-Time-Password screen to enter you One-Time-Password from the Authenticator
+        app.
+      </p>
+      <p>
+        <button mat-button (click)="saveSeed()" color="accent">
+          <i matTooltip="Complete registration" class="fa fa-sign-in fa-fw"></i> Register
+        </button>
+      </p>
+    </mat-card>
+  </div>
+</div>
+<div class="screen" *ngIf="(verifyingOTP || loggingIn)">
+  <div class="loginDiv">
+    <mat-card>
+        <p *ngIf="verifyingOTP" class="mat-display-1">Verifying One-Time-Password</p>
+        <p *ngIf="loggingIn" class="mat-display-1">Signing in</p>
+        <div style="text-align: center;"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i></div>
+    </mat-card>
+  </div>
+</div>
+
+

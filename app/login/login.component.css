@@ -1,0 +1,28 @@
+div.screen {
+    display: flex;
+    height: 100vh;
+}
+.loginDiv {
+    margin: auto;
+    width: 600px;
+    height: 350px;
+}
+.qrCodeDiv {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.qrCodeSpan, .keySpan {
+    min-width: 250px;
+    padding: 25px;
+    text-align: center;
+}
+.displaySeed {
+    padding: 1em;
+    letter-spacing: 0.1em;
+    background-color: #f2f2f2;
+    border-radius: 0.5em;
+    box-shadow: 2px 2px 2px #999999;
+    color: #333333;
+}
