@@ -14,8 +14,9 @@ service cloud.firestore {
       allow write: if isTwoFactorAuthenticated() || isOwner(person);
     }
     
-    match /twofa/{document=**} {
-      allow read, write: if false;
+    match /twofa/{personId} {
+      allow read: if false;
+      allow write: if isOwner(personId);
     }
   }
 }
