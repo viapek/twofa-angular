@@ -30,8 +30,8 @@ export class AuthService {
   verifyingOTP = new BehaviorSubject<boolean>(false);
   loggingIn = new BehaviorSubject<boolean>(false);
   currentUserId: string;
-  verifyOTPUrl = 'https://us-central1-login2fa.cloudfunctions.net/verifyOTP-verifyOTP';
-  generateSecretUrl = 'https://us-central1-login2fa.cloudfunctions.net/generateOTPSecret-generateOTPSecret';
+  verifyOTPUrl = '<< URL TO CLOUD FUNCTION >>';
+  generateSecretUrl = '<< URL TO CLOUD FUNCTION >>';
 
   user: Observable<Person | null>;
 
